@@ -36,6 +36,7 @@ class Config:
     pdf_height_mm: float = 297.0
     dpi: int = 300
     background_color: str = "#ffffff"
+    transparent_background: bool = False
 
     # Fitting Options
     fitting_mode: str = "proportional"   # "proportional" | "scale_to_format"

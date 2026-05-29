@@ -24,9 +24,13 @@ def transform_strokes(
     mode: str,
     device_w_cm: float = 13.0,
     device_h_cm: float = 8.0,
-) -> List[Stroke]:
+) -> tuple[List[Stroke], float]:
     """
     Transform raw input strokes into PDF coordinate space (points, origin bottom-left).
+
+    Returns a tuple of (transformed_strokes, effective_scale).
+    effective_scale is the scalar factor that maps raw input coordinate units to PDF points
+    under the selected fitting mode.
 
     mode == "proportional":
         The physical device surface is letterboxed into the canvas.
@@ -37,7 +41,7 @@ def transform_strokes(
         Their bounding box is scaled/translated to fill the PDF page.
     """
     if not strokes or all(len(s) == 0 for s in strokes):
-        return strokes
+        return strokes, 1.0
 
     if mode == "proportional":
         return _proportional(strokes, canvas_w, canvas_h, device_w_cm, device_h_cm, pdf_w_pt, pdf_h_pt)
@@ -53,7 +57,7 @@ def _proportional(
     device_h_cm: float,
     pdf_w_pt: float,
     pdf_h_pt: float,
-) -> List[Stroke]:
+) -> tuple[List[Stroke], float]:
     """
     Fit the physical device area proportionally onto the PDF page, no stretching.
     Auto-rotates 90° if the device AR fits the page better that way.
@@ -86,6 +90,12 @@ def _proportional(
     rotate = scale_rotated > scale_normal
     scale = scale_rotated if rotate else scale_normal  # pts per cm
 
+    # Compute effective scale from raw canvas units to PDF points.
+    # Raw input units are canvas pixels; the device region in canvas maps to
+    # physical device centimeters, then to PDF points.
+    input_scale = device_w_cm / mapped_w
+    effective_scale = scale * input_scale
+
     # Centre of device region in canvas, and centre of page
     dev_cx = off_x + mapped_w / 2.0
     dev_cy = off_y + mapped_h / 2.0
@@ -111,10 +121,10 @@ def _proportional(
                 py = page_cy - dy * scale   # flip Y: canvas y-down → PDF y-up
             new_stroke.append((px, py))
         result.append(new_stroke)
-    return result
+    return result, effective_scale
 
 
-def _scale_to_format(strokes: List[Stroke], pdf_w_pt: float, pdf_h_pt: float) -> List[Stroke]:
+def _scale_to_format(strokes: List[Stroke], pdf_w_pt: float, pdf_h_pt: float) -> tuple[List[Stroke], float]:
     """
     Scale the bounding box of all strokes to fit the PDF page proportionally,
     rotating 90° if that yields a larger fit. Centred with 5% margin.
@@ -159,7 +169,7 @@ def _scale_to_format(strokes: List[Stroke], pdf_w_pt: float, pdf_h_pt: float) ->
                 py = page_cy - dy          # flip Y: canvas y-down -> PDF y-up
             new_stroke.append((px, py))
         result.append(new_stroke)
-    return result
+    return result, scale
 
 
 def _fit_to_page(

@@ -235,9 +235,6 @@ class ConfigDialog(QDialog):
         self._pdf_preset.currentTextChanged.connect(self._update_fitting_preview)
         layout.addRow("Paper format:", self._pdf_preset)
 
-        self._bg_color_btn = _ColorButton(self._cfg.background_color)
-        layout.addRow("Background colour:", self._bg_color_btn)
-
         self._dpi = QSpinBox()
         self._dpi.setRange(72, 2400)
         self._dpi.setSingleStep(72)
@@ -308,14 +305,19 @@ class ConfigDialog(QDialog):
 
         mode_group = QGroupBox("Input mapping mode")
         mode_layout = QVBoxLayout(mode_group)
-        self._fit_prop = QRadioButton("Proportional  (letterbox — device AR preserved, no clipping)")
-        self._fit_scale = QRadioButton("Scale to Format  (capture all coords, fit bounding box to page)")
+        self._fit_scale = QRadioButton("Center drawing (\"rotate and scale to format\")")
+        self._fit_prop = QRadioButton("Map screen to format")
         self._fit_prop.setChecked(True)
-        mode_layout.addWidget(self._fit_prop)
         mode_layout.addWidget(self._fit_scale)
+        mode_layout.addWidget(self._fit_prop)
         layout.addWidget(mode_group)
 
-        dev_group = QGroupBox("Physical input device size (for Proportional mode)")
+        self._unlimited_canvas = QCheckBox(
+            "Unlimited canvas  (mouse drives an infinite drawing surface)"
+        )
+        layout.addWidget(self._unlimited_canvas)
+
+        dev_group = QGroupBox("Physical input device size (for center screen mode)")
         dev_layout = QFormLayout(dev_group)
         self._dev_w = QDoubleSpinBox()
         self._dev_w.setRange(1.0, 100.0)
@@ -328,11 +330,6 @@ class ConfigDialog(QDialog):
         dev_layout.addRow("Device width:", self._dev_w)
         dev_layout.addRow("Device height:", self._dev_h)
         layout.addWidget(dev_group)
-
-        self._unlimited_canvas = QCheckBox(
-            "Unlimited canvas  (mouse drives an infinite drawing surface)"
-        )
-        layout.addWidget(self._unlimited_canvas)
 
         self._fitting_preview = _FittingPreview()
         layout.addWidget(QLabel("Preview:"))
@@ -408,10 +405,29 @@ class ConfigDialog(QDialog):
         self._line_thickness.setMaximumWidth(100)
         form.addRow("Contour:", self._line_thickness)
 
+        timing_row = QWidget()
+        timing_layout = QHBoxLayout(timing_row)
+        timing_layout.setContentsMargins(0, 0, 0, 0)
+        self._thick_before = QRadioButton("Before fitting")
+        self._thick_after = QRadioButton("After fitting")
+        self._thick_after.setChecked(True)
+        timing_layout.addWidget(self._thick_before)
+        timing_layout.addWidget(self._thick_after)
+        timing_layout.addStretch()
+        form.addRow("Apply Contour:", timing_row)
+
         self._line_color_btn = _ColorButton(self._cfg.line_color)
         form.addRow("Line colour:", self._line_color_btn)
 
-        timing_row = QWidget()
+        self._bg_color_btn = _ColorButton(self._cfg.background_color)
+        form.addRow("Background colour:", self._bg_color_btn)
+
+        self._transparent_background = QCheckBox("Transparent background")
+        form.addRow("", self._transparent_background)
+
+        layout.addLayout(form)
+        layout.addStretch()
+        return w
         timing_layout = QHBoxLayout(timing_row)
         timing_layout.setContentsMargins(0, 0, 0, 0)
         self._thick_before = QRadioButton("Before fitting")
@@ -529,6 +545,7 @@ class ConfigDialog(QDialog):
         self._line_thickness.setValue(cfg.line_thickness_pt)
         self._line_color_btn._color = QColor(cfg.line_color)
         self._line_color_btn._refresh()
+        self._transparent_background.setChecked(cfg.transparent_background)
         if cfg.thickness_timing == "before":
             self._thick_before.setChecked(True)
         else:
@@ -572,6 +589,7 @@ class ConfigDialog(QDialog):
         # Line config
         cfg.line_thickness_pt = self._line_thickness.value()
         cfg.line_color = self._line_color_btn.color_hex()
+        cfg.transparent_background = self._transparent_background.isChecked()
         cfg.thickness_timing = "before" if self._thick_before.isChecked() else "after"
 
         # Vector look

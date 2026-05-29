@@ -100,7 +100,7 @@ def build_pdf(
     # in world coords that extend past the screen; only the bbox-based
     # scale_to_format mapping makes sense.
     fit_mode = "scale_to_format" if cfg.unlimited_canvas else cfg.fitting_mode
-    transformed = transform_strokes(
+    transformed, effective_scale = transform_strokes(
         strokes,
         canvas_w=canvas_w,
         canvas_h=canvas_h,
@@ -110,6 +110,9 @@ def build_pdf(
         device_w_cm=cfg.device_width_cm,
         device_h_cm=cfg.device_height_cm,
     )
+
+    if cfg.thickness_timing == "before":
+        line_w *= effective_scale
 
     # Apply smoothing: RDP simplification first, then Chaikin curve fitting
     iterations = _smoothness_to_iterations(cfg.smoothness)
@@ -129,9 +132,10 @@ def build_pdf(
     c = rl_canvas.Canvas(str(out_path), pagesize=(pdf_w_pt, pdf_h_pt))
 
     # Background fill
-    bg = HexColor(cfg.background_color)
-    c.setFillColor(bg)
-    c.rect(0, 0, pdf_w_pt, pdf_h_pt, fill=1, stroke=0)
+    if not cfg.transparent_background:
+        bg = HexColor(cfg.background_color)
+        c.setFillColor(bg)
+        c.rect(0, 0, pdf_w_pt, pdf_h_pt, fill=1, stroke=0)
 
     # Draw strokes
     line_color = HexColor(cfg.line_color)
