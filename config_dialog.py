@@ -235,6 +235,9 @@ class ConfigDialog(QDialog):
         self._pdf_preset.currentTextChanged.connect(self._update_fitting_preview)
         layout.addRow("Paper format:", self._pdf_preset)
 
+        self._bg_color_btn = _ColorButton(self._cfg.background_color)
+        layout.addRow("Background colour:", self._bg_color_btn)
+
         self._dpi = QSpinBox()
         self._dpi.setRange(72, 2400)
         self._dpi.setSingleStep(72)

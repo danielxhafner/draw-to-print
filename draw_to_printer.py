@@ -96,7 +96,8 @@ class MainWindow(QMainWindow):
 
     def _on_print_done(self, archive_path: str):
         name = Path(archive_path).name
-        self._canvas.show_status(f"Saved & printed  →  {name}")
+        status_msg = "Saved" if self.cfg.save_pdf_only else "Saved & printed"
+        self._canvas.show_status(f"{status_msg}  →  {name}")
 
     def _on_print_error(self, msg: str):
         self._canvas.show_status(f"Error: {msg}")
