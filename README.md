@@ -3,6 +3,8 @@
 A fullscreen drawing utility that converts hand-drawn strokes into vector PDF output and sends it to a printer or archive without any dialogs or confirmation windows.
 See how far you can move your Bluetooth mouse away from your computer while drawing, or simply streamline and accelerate your drawing process.
 
+![bildbeschreibung](./assets/video.mov)
+
 ## Setup 
 
 ### Requirements
@@ -58,6 +60,9 @@ This launches the application using the Python interpreter from `.venv` and runs
 - `Vector`
 - `Number of Strokes`
 - `Archive Folder`
+
+![bildbeschreibung](./assets/screen1.png)
+![bildbeschreibung](./assets/screen2.png)
 
 ### Main functions and modules
 
@@ -126,4 +131,3 @@ Open the configuration window with `S` or `command+,` to adjust:
 - The app depends on CUPS commands, so ensure `lp` and `lpstat` are available on your PATH.
 - The archive folder is created automatically when needed.
 
-![bildbeschreibung](./assets/screen1.png)
