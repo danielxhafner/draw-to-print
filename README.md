@@ -1,4 +1,4 @@
-# draw_to_printer
+# draw to print
 
 A fullscreen drawing utility that converts hand-drawn strokes into vector PDF output and sends the result to a printer or archive.
 
