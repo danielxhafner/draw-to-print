@@ -1,7 +1,8 @@
 # draw to print
 
 A fullscreen drawing utility that converts hand-drawn strokes into vector PDF output and sends it to a printer or archive without any dialogs or confirmation windows.
-See how far you can move your Bluetooth mouse away from your computer while drawing, or simply streamline and accelerate your drawing process.
+
+Find out how far you can move your Bluetooth mouse away from your computer while drawing, or simply streamline and accelerate your drawing process.
 
 ![bildbeschreibung](./assets/screen3.png)
 
