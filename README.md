@@ -1,8 +1,9 @@
-# draw_to_printer
+# draw to print
 
-A fullscreen drawing utility that converts hand-drawn strokes into vector PDF output and sends the result to a printer or archive.
+A fullscreen drawing utility that converts hand-drawn strokes into vector PDF output and sends it to a printer or archive without any dialogs or confirmation windows.
+See how far you can move your Bluetooth mouse away from your computer while drawing, or simply streamline and accelerate your drawing process.
 
-## Setup
+## Setup 
 
 ### Requirements
 - Python 3.x
@@ -41,7 +42,7 @@ This launches the application using the Python interpreter from `.venv` and runs
 ### Key features
 
 - Fullscreen drawing canvas built with PyQt5
-- Configurable print cycle triggered by stroke count
+- Configurable print cycle triggered by stroke count 1-100
 - Vector PDF generation with smoothing and fitting logic
 - PDF printing with CUPS via `lp`
 - `save_pdf_only` mode to skip printing and only save the PDF
@@ -51,15 +52,12 @@ This launches the application using the Python interpreter from `.venv` and runs
 ## New setup titles and functions
 
 ### Setup titles
-- `Setup`
-- `Install dependencies`
-- `Run the program`
-- `Overview`
-- `Key features`
-- `Controls`
-- `Settings`
-- `File locations`
-- `Notes`
+- `Print Format`
+- `Input`
+- `Scaling`
+- `Vector`
+- `Number of Strokes`
+- `Archive Folder`
 
 ### Main functions and modules
 
@@ -99,18 +97,18 @@ This launches the application using the Python interpreter from `.venv` and runs
 - Left mouse button: draw strokes
 - Right mouse button: increment the line/print target count
 - Right double-click: reset the target count to 1
-- `S` key: open the settings dialog
+- `S` or `command+,`key: open the settings dialog
 - `Escape` or `Ctrl+Q`: quit the application
 
 ## Settings
 
-Open the configuration window with `S` to adjust:
+Open the configuration window with `S` or `command+,` to adjust:
 
 - paper size and custom PDF dimensions
 - DPI and background color
 - fitting mode (`proportional` or `scale_to_format`)
 - input device dimensions and unlimited canvas mode
-- line thickness, color, and smoothing
+- Vector contour, color, and smoothing
 - number of strokes required for a print cycle (Works on a limited canvas only)
 - archive folder and printer selection
 - `save_pdf_only` to skip printing and only save PDFs

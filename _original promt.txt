@@ -1,0 +1,44 @@
+
+
+
+
+create an experimental artistic program "draw_to_printer" 
+
+1. The program creates empty pdf-files to draw into. The lines in the pdf must be vector based. 
+
+2. While holding the primary mouse or trackpad button the program captures its motion and draws a line into the provide empty pdf-file. 
+
+3. After releasing the primary mouse or trackpad button the pdf file must be send to the printer (without any dialogue) and saved to the archive folder, use timestamp as filename.
+
+4. count klicks on secondary mouse button to set up the number of drawn lines before printing/saving.
+
+5. The program has a configuration mode to setup following specific information pressing "option + c "
+
+The configuration contains and should be structured in following sections
+
+
+1. "PDF Setup" (here I want to be able to configure the size of the pdf, including standard DIN Formates or specific measurements in cm/inch and resolution in dpi)
+
+
+2. "Fitting options" (rotate and fit pdf format to trackpad / graphic pad or fit the drawn line to the center of the pdf format, make a visual interface to do so)
+3. "Line configuration" Thickness of the line in pt, an "after fitting" of "before fitting"
+4. "vector look" a slider to adjust the vector-line-look from precise to smooth(rounded)
+5. "Number of lines" default number of captured lines before send to printer - number-box (1-100) if not defined by klicks on the secondary mouse button
+6. "Arvhive Folder"  name and destination (standard system dialogue)
+7. "Mouse Setup" (here I like to select the input device for the "drawing" such as usb Mouse, Graphic pad, Internal computer Trackpad)
+8. "Printing Setup" (standard system dialogue)
+
+
+
+
+concerning fitting options: add the option scale to 
+
+
+
+pyten dependency management with uv
+
+
+The program captures the raw data of the mouse that aren't limited to the boundaries of the screen while pressing primary button. After N lines the drawing gets scaled to the set up format. Visualization on the screen is secondary.	
+
+
+Build a ansible 
