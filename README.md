@@ -5,6 +5,9 @@ A fullscreen drawing utility that converts hand-drawn strokes into vector PDF ou
 Find out how far you can move your Bluetooth mouse away from your computer while drawing, or simply streamline and accelerate your drawing process.
 
 ![bildbeschreibung](./assets/screen3.png)
+![bildbeschreibung](./assets/screen4.png)
+
+https://github.com/danielxhafner/draw-to-print/blob/main/assets/video.mov
 
 ## Setup 
 
@@ -131,5 +134,3 @@ Open the configuration window with `S` or `command+,` to adjust:
 - If no printer is configured, the system default printer is used.
 - The app depends on CUPS commands, so ensure `lp` and `lpstat` are available on your PATH.
 - The archive folder is created automatically when needed.
-
-![bildbeschreibung](./assets/video.mov)
