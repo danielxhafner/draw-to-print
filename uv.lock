@@ -471,4 +471,3 @@ sdist = { url = "https://files.pythonhosted.org/packages/4d/3f/b3861b7e40c9d66f4
 wheels = [
     { url = "https://files.pythonhosted.org/packages/a7/45/ea7fad10122440de6e845568d106bffdc456ca0e8a1d8ae10b46016087e4/reportlab-4.5.1-py3-none-any.whl", hash = "sha256:06fce8cb56c83307cfa4909cdf4e6a2ddbb44e5d6ef4d2edca896d7e9769f091", size = 1957812, upload-time = "2026-05-12T10:14:10.622Z" },
 ]
-

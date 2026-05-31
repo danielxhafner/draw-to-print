@@ -285,4 +285,3 @@ class CanvasWidget(QWidget):
         self.cfg = cfg
         self._apply_cursor()
         self.update()
-

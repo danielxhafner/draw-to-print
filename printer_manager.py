@@ -58,4 +58,3 @@ def print_file(pdf_path: Path, printer_name: str) -> bool:
         return result.returncode == 0
     except (FileNotFoundError, subprocess.TimeoutExpired):
         return False
-

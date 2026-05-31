@@ -26,4 +26,3 @@ def save_to_archive(pdf_path: Path, cfg: Config) -> Path:
 
     shutil.copy2(str(pdf_path), str(dest))
     return dest
-
