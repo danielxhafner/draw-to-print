@@ -229,3 +229,4 @@ def _fit_to_page(
             new_stroke.append((px, py))
         result.append(new_stroke)
     return result
+

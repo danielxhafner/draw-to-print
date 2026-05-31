@@ -85,3 +85,4 @@ def save_config(cfg: Config) -> None:
     CONFIG_PATH.parent.mkdir(parents=True, exist_ok=True)
     with open(CONFIG_PATH, "w", encoding="utf-8") as f:
         json.dump(asdict(cfg), f, indent=2)
+

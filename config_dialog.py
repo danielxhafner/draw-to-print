@@ -619,3 +619,4 @@ class ConfigDialog(QDialog):
 
     def get_config(self) -> Config:
         return self._cfg
+
